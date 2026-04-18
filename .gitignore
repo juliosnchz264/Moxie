@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+.astro/
+.turbo/
+.vercel/
+.cloudflare/
+.wrangler/
+.output/
+out/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+
+# Payload generated — keep src/payload-types.ts tracked (regenerated, but reviewed)
+# .next cache handled above
+
+# Misc
+*.pem
+pnpm-lock.yaml.backup

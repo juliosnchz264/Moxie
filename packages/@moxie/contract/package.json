@@ -1,0 +1,23 @@
+{
+  "name": "@moxie/contract",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zod schemas, TS types, and versioned block contracts for Moxie",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./blocks": "./src/blocks/index.ts"
+  },
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "build": "echo \"no build step — source shipped directly via workspace\""
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

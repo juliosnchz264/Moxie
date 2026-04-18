@@ -1,0 +1,25 @@
+{
+  "name": "moxie",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Multi-tenant visual CMS — free-tier, versioned block contract, token-based styling",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": "^9 || ^10"
+  },
+  "scripts": {
+    "dev:api": "pnpm --filter backend dev",
+    "dev:studio": "pnpm --filter editor dev",
+    "dev:web": "pnpm --filter public-site dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
+}
