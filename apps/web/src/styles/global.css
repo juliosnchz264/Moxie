@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+/* Semantic colors backed by CSS vars. Tailwind v4's @theme block
+   registers these as utility colors (bg-primary, text-primary, border-primary)
+   and emits the --color-* vars. Per-site themes override these vars at
+   render time via an inline <style> tag (see [...slug].astro). */
+@theme {
+  --color-primary: #2563eb;
+  --color-secondary: #475569;
+  --color-accent: #d946ef;
+  --color-muted: #f1f5f9;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --font-sans: system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Responsive token classes for Moxie blocks — these are emitted at runtime
+   by @moxie/tokens when rendering with no activeBp (public site), so they
+   must be safelisted for the Tailwind JIT. */
+@source inline("{,md:,lg:}{p-0,p-1,p-2,p-4,p-6,p-8,p-12}");
+@source inline("{,md:,lg:}{px-0,px-1,px-2,px-4,px-6,px-8,px-12}");
+@source inline("{,md:,lg:}{py-0,py-1,py-2,py-4,py-6,py-8,py-12}");
+@source inline("{,md:,lg:}{gap-0,gap-1,gap-2,gap-4,gap-6,gap-8,gap-12}");
+@source inline("{,md:,lg:}{bg-primary,bg-secondary,bg-accent,bg-muted,bg-background,bg-foreground}");
+@source inline("{,md:,lg:}{text-primary,text-secondary,text-accent,text-muted,text-background,text-foreground}");
+@source inline("{,md:,lg:}{border-primary,border-secondary,border-accent,border-muted,border-background,border-foreground}");
+@source inline("{,md:,lg:}{rounded-none,rounded-sm,rounded-md,rounded-lg,rounded-full}");
+@source inline("{,md:,lg:}{text-xs,text-sm,text-base,text-lg,text-xl,text-2xl,text-3xl,text-4xl}");
+@source inline("{,md:,lg:}{text-left,text-center,text-right}");
+@source inline("{,md:,lg:}{shadow-none,shadow-sm,shadow-md,shadow-lg,shadow-xl}");
+@source inline("{,md:,lg:}{border-0,border,border-2,border-4}");
+@source inline("{,md:,lg:}{max-w-none,max-w-sm,max-w-md,max-w-lg,max-w-xl,max-w-2xl,max-w-prose,max-w-full}");
+
+/* Block-specific literal classes (used by image/button/spacer/divider/gallery). */
+@source inline("{object-cover,object-contain,object-fill}");
+@source inline("{h-2,h-4,h-8,h-12,h-16,h-24}");
+@source inline("{border-solid,border-dashed,border-dotted}");
+@source inline("{border-t,border-t-2,border-t-4}");
+@source inline("{aspect-square,aspect-video}");
+@source inline("{grid-cols-2,grid-cols-3,grid-cols-4}");
+@source inline("{bg-blue-700,hover:bg-blue-700,hover:bg-blue-50,hover:bg-slate-300,bg-slate-200,bg-slate-100,border-blue-600,border-slate-200,border-slate-300}");
+
+/* Rich text renderer classes. */
+@source inline("{list-disc,list-decimal,pl-5,pl-3,border-l-4,italic,my-4,rounded,px-1,font-bold,font-semibold}");

@@ -1,0 +1,20 @@
+---
+import type { Block } from '@moxie/core';
+import BlockRenderer from '../BlockRenderer.astro';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as { title?: string };
+const children = block.children ?? [];
+---
+
+<article class={`${className} bg-white border border-slate-200 shadow-sm rounded-lg`}>
+  {props.title ? <header class="font-semibold mb-2">{props.title}</header> : null}
+  <div class="flex flex-col">
+    {children.map((child) => <div><BlockRenderer block={child} /></div>)}
+  </div>
+</article>

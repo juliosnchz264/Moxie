@@ -1,0 +1,32 @@
+---
+import type { Block } from '@moxie/core';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const styleClass: Record<'solid' | 'dashed' | 'dotted', string> = {
+  solid: 'border-solid',
+  dashed: 'border-dashed',
+  dotted: 'border-dotted',
+};
+
+const thicknessClass: Record<'thin' | 'medium' | 'thick', string> = {
+  thin: 'border-t',
+  medium: 'border-t-2',
+  thick: 'border-t-4',
+};
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as {
+  style?: 'solid' | 'dashed' | 'dotted';
+  thickness?: 'thin' | 'medium' | 'thick';
+};
+const style = styleClass[props.style ?? 'solid'];
+const thickness = thicknessClass[props.thickness ?? 'thin'];
+---
+
+<div class={className}>
+  <hr class={`${thickness} ${style} border-slate-300`} />
+</div>

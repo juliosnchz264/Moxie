@@ -1,0 +1,13 @@
+---
+import type { Block } from '@moxie/core';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as { body?: string };
+---
+
+<div class={className}>{props.body ?? ''}</div>

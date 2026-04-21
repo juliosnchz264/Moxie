@@ -1,0 +1,104 @@
+---
+import { defaultTheme, googleFontsHref, themeCssDeclarations, type Theme } from '@moxie/tokens';
+import { fetchPageBySlug, trackPageView } from '../lib/api';
+import BlockRenderer from '../components/BlockRenderer.astro';
+import '../styles/global.css';
+
+const siteId = Astro.locals.siteId;
+const site = Astro.locals.site;
+const rawSlug = Astro.params.slug;
+const slug = rawSlug && rawSlug.length > 0 ? rawSlug : 'home';
+
+let page = null;
+let errorMsg: string | null = null;
+
+if (!siteId) {
+  Astro.response.status = 404;
+  errorMsg = 'Unknown domain';
+} else {
+  page = await fetchPageBySlug(siteId, slug);
+  if (!page) {
+    Astro.response.status = 404;
+    errorMsg = 'Page not found';
+  }
+}
+
+const theme: Theme = (site?.theme ?? defaultTheme) as Theme;
+const themeCss = themeCssDeclarations(theme);
+const fontFamilies = [theme.fonts?.sans, theme.fonts?.heading].filter(
+  (f): f is string => typeof f === 'string' && f.length > 0,
+);
+const fontsHref = googleFontsHref(fontFamilies);
+
+const header = site?.header ?? [];
+const footer = site?.footer ?? [];
+
+const pageTitle = page?.title ?? errorMsg ?? 'Moxie';
+const siteName = site?.name;
+const fullTitle = siteName && page?.title ? `${page.title} · ${siteName}` : pageTitle;
+const description = page?.description ?? undefined;
+const ogImage = page?.metaImage ?? undefined;
+const host = Astro.request.headers.get('host') ?? '';
+const canonical = host && slug ? `https://${host.split(':')[0]}${slug === 'home' ? '/' : '/' + slug}` : undefined;
+
+if (!errorMsg) {
+  Astro.response.headers.set(
+    'Cache-Control',
+    'public, s-maxage=60, stale-while-revalidate=3600',
+  );
+  if (page?.updatedAt) {
+    Astro.response.headers.set('Last-Modified', new Date(page.updatedAt).toUTCString());
+  }
+  if (page?.id) trackPageView(page.id);
+} else {
+  Astro.response.headers.set('Cache-Control', 'no-store');
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{fullTitle}</title>
+    {description ? <meta name="description" content={description} /> : null}
+    {canonical ? <link rel="canonical" href={canonical} /> : null}
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:type" content="website" />
+    {description ? <meta property="og:description" content={description} /> : null}
+    {ogImage ? <meta property="og:image" content={ogImage} /> : null}
+    {canonical ? <meta property="og:url" content={canonical} /> : null}
+    {siteName ? <meta property="og:site_name" content={siteName} /> : null}
+
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={fullTitle} />
+    {description ? <meta name="twitter:description" content={description} /> : null}
+    {ogImage ? <meta name="twitter:image" content={ogImage} /> : null}
+
+    {fontsHref && <link rel="preconnect" href="https://fonts.googleapis.com" />}
+    {fontsHref && <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />}
+    {fontsHref && <link rel="stylesheet" href={fontsHref} />}
+    <style set:html={`:root { ${themeCss} }`} />
+  </head>
+  <body>
+    {errorMsg ? (
+      <main class="p-8"><h1 class="text-xl">{errorMsg}</h1></main>
+    ) : (
+      <>
+        {header.length > 0 ? (
+          <header>
+            {header.map((b) => <BlockRenderer block={b} />)}
+          </header>
+        ) : null}
+        <main>
+          {page?.layout.map((b) => <BlockRenderer block={b} />)}
+        </main>
+        {footer.length > 0 ? (
+          <footer>
+            {footer.map((b) => <BlockRenderer block={b} />)}
+          </footer>
+        ) : null}
+      </>
+    )}
+  </body>
+</html>

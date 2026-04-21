@@ -1,0 +1,25 @@
+---
+import type { Block } from '@moxie/core';
+import BlockRenderer from '../BlockRenderer.astro';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const colsGrid: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-3',
+  4: 'grid-cols-4',
+};
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as { count?: 2 | 3 | 4 };
+const count: 2 | 3 | 4 = props.count ?? 2;
+const children = block.children ?? [];
+const cells = Array.from({ length: count }, (_, i) => children[i] ?? null);
+---
+
+<div class={`${className} grid ${colsGrid[count]} gap-4`}>
+  {cells.map((child) => <div>{child ? <BlockRenderer block={child} /> : null}</div>)}
+</div>

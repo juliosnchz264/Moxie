@@ -1,0 +1,36 @@
+---
+import type { Block } from '@moxie/core';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const variantClass: Record<'primary' | 'secondary' | 'ghost', string> = {
+  primary: 'bg-blue-600 text-white hover:bg-blue-700',
+  secondary: 'bg-slate-200 text-slate-900 hover:bg-slate-300',
+  ghost: 'bg-transparent text-blue-600 hover:bg-blue-50 border border-blue-600',
+};
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as {
+  label?: string;
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  target?: '_self' | '_blank';
+};
+const variant = variantClass[props.variant ?? 'primary'];
+const target = props.target ?? '_self';
+const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
+---
+
+<div class={className}>
+  <a
+    href={props.href ?? '#'}
+    target={target}
+    rel={rel}
+    class={`inline-flex items-center rounded px-4 py-2 text-sm font-medium transition ${variant}`}
+  >
+    {props.label ?? 'Button'}
+  </a>
+</div>

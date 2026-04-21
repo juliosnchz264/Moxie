@@ -1,0 +1,23 @@
+---
+import type { Block } from '@moxie/core';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const heightClass: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl', string> = {
+  xs: 'h-2',
+  sm: 'h-4',
+  md: 'h-8',
+  lg: 'h-12',
+  xl: 'h-16',
+  '2xl': 'h-24',
+};
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as { size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' };
+const size = heightClass[props.size ?? 'md'];
+---
+
+<div class={`${className} ${size}`} aria-hidden="true"></div>

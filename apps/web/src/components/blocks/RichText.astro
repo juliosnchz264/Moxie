@@ -1,0 +1,21 @@
+---
+import type { Block } from '@moxie/core';
+import { renderRichText } from '../../lib/richtext';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as { content?: unknown };
+const inner = renderRichText(props.content);
+---
+
+<div class={`${className} prose-moxie`}>
+  {inner ? (
+    <Fragment set:html={inner} />
+  ) : (
+    <p class="text-slate-400 italic">Empty</p>
+  )}
+</div>

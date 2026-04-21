@@ -1,0 +1,47 @@
+---
+import type { Block } from '@moxie/core';
+import { validateBlock } from '@moxie/contract';
+import { resolveTokens, type TokenProps } from '@moxie/tokens';
+
+import Hero from './blocks/Hero.astro';
+import Text from './blocks/Text.astro';
+import Section from './blocks/Section.astro';
+import Columns from './blocks/Columns.astro';
+import Image from './blocks/Image.astro';
+import Button from './blocks/Button.astro';
+import Spacer from './blocks/Spacer.astro';
+import Divider from './blocks/Divider.astro';
+import Card from './blocks/Card.astro';
+import Cta from './blocks/Cta.astro';
+import Gallery from './blocks/Gallery.astro';
+import RichText from './blocks/RichText.astro';
+
+interface Props {
+  block: Block;
+}
+
+const { block: rawBlock } = Astro.props as Props;
+const block = validateBlock(rawBlock);
+const className = resolveTokens((block.props ?? {}) as TokenProps);
+
+const components: Record<string, unknown> = {
+  hero: Hero,
+  text: Text,
+  section: Section,
+  columns: Columns,
+  image: Image,
+  button: Button,
+  spacer: Spacer,
+  divider: Divider,
+  card: Card,
+  cta: Cta,
+  gallery: Gallery,
+  richtext: RichText,
+};
+
+const Component = components[block.type] as
+  | ((_props: { block: Block; className: string }) => unknown)
+  | undefined;
+---
+
+{Component ? <Component block={block} className={className} /> : null}

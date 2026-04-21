@@ -1,0 +1,37 @@
+---
+import type { Block } from '@moxie/core';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const fitClass: Record<'cover' | 'contain' | 'fill', string> = {
+  cover: 'object-cover',
+  contain: 'object-contain',
+  fill: 'object-fill',
+};
+
+const { block, className } = Astro.props as Props;
+const props = (block.props ?? {}) as {
+  src?: string;
+  alt?: string;
+  caption?: string;
+  fit?: 'cover' | 'contain' | 'fill';
+};
+const fit = fitClass[props.fit ?? 'cover'];
+---
+
+<figure class={className}>
+  {props.src ? (
+    <img
+      src={props.src}
+      alt={props.alt ?? ''}
+      loading="lazy"
+      class={`w-full h-auto ${fit} rounded`}
+    />
+  ) : (
+    <div class="aspect-video bg-slate-100 flex items-center justify-center text-slate-400 text-sm">No image</div>
+  )}
+  {props.caption ? <figcaption class="text-xs text-slate-500 mt-1">{props.caption}</figcaption> : null}
+</figure>

@@ -1,0 +1,16 @@
+---
+import type { Block } from '@moxie/core';
+import BlockRenderer from '../BlockRenderer.astro';
+
+interface Props {
+  block: Block;
+  className: string;
+}
+
+const { block, className } = Astro.props as Props;
+const children = block.children ?? [];
+---
+
+<section class={className}>
+  {children.map((child) => <BlockRenderer block={child} />)}
+</section>
