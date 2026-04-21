@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Semantic design-system colors backed by CSS vars. The canvas root
+   overrides these vars inline from the site's theme so preview reflects
+   the real rendered output. */
+@theme {
+  --color-primary: #2563eb;
+  --color-secondary: #475569;
+  --color-accent: #d946ef;
+  --color-muted: #f1f5f9;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --font-sans: system-ui, sans-serif;
+  --font-heading: var(--font-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: system-ui, sans-serif;
+}
+
+/* Token classes live as literal strings inside the @moxie/tokens workspace
+   package. Tailwind v4 doesn't follow pnpm symlinks by default, so classes
+   coming only from that package must be safelisted here. Studio renders at
+   a single breakpoint at a time (no md:/lg: prefixes), so only the bare
+   forms are needed. */
+@source inline("{p-0,p-1,p-2,p-4,p-6,p-8,p-12}");
+@source inline("{px-0,px-1,px-2,px-4,px-6,px-8,px-12}");
+@source inline("{py-0,py-1,py-2,py-4,py-6,py-8,py-12}");
+@source inline("{gap-0,gap-1,gap-2,gap-4,gap-6,gap-8,gap-12}");
+@source inline("{bg-primary,bg-secondary,bg-accent,bg-muted,bg-background,bg-foreground}");
+@source inline("{text-primary,text-secondary,text-accent,text-muted,text-background,text-foreground}");
+@source inline("{border-primary,border-secondary,border-accent,border-muted,border-background,border-foreground}");
+@source inline("{rounded-none,rounded-sm,rounded-md,rounded-lg,rounded-full}");
+@source inline("{text-xs,text-sm,text-base,text-lg,text-xl,text-2xl,text-3xl,text-4xl}");
+@source inline("{text-left,text-center,text-right}");
+@source inline("{shadow-none,shadow-sm,shadow-md,shadow-lg,shadow-xl}");
+@source inline("{border-0,border,border-2,border-4}");
+@source inline("{max-w-none,max-w-sm,max-w-md,max-w-lg,max-w-xl,max-w-2xl,max-w-prose,max-w-full}");
+
+/* Microinteractions — EPIC P2. */
+@keyframes moxie-block-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes moxie-block-leave {
+  0% {
+    opacity: 1;
+    transform: none;
+    max-height: var(--moxie-leave-h, 600px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@keyframes moxie-save-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.5); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(1); }
+}
+
+@keyframes moxie-toast-in {
+  0% { opacity: 0; transform: translate(-50%, 8px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.moxie-block-enter {
+  animation: moxie-block-enter 180ms ease-out both;
+}
+.moxie-block-leave {
+  overflow: hidden;
+  animation: moxie-block-leave 180ms ease-in both;
+  pointer-events: none;
+}
+.moxie-save-pulse {
+  animation: moxie-save-pulse 520ms ease-out 1;
+}
+.moxie-toast-in {
+  animation: moxie-toast-in 180ms ease-out both;
 }

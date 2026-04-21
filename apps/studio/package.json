@@ -13,12 +13,18 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@moxie/contract": "workspace:*",
+    "@moxie/core": "workspace:*",
     "@moxie/engine": "workspace:*",
     "@moxie/tokens": "workspace:*",
     "@moxie/ui": "workspace:*",
+    "@tiptap/extension-link": "^3.22.4",
+    "@tiptap/pm": "^3.22.4",
+    "@tiptap/react": "^3.22.4",
+    "@tiptap/starter-kit": "^3.22.4",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
