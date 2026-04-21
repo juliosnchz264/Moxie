@@ -12,12 +12,14 @@
   },
   "scripts": {
     "lint": "tsc --noEmit",
-    "build": "echo \"no build step — source shipped directly via workspace\""
+    "test": "vitest run"
   },
   "dependencies": {
+    "@moxie/core": "workspace:*",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vitest": "^4.0.18"
   }
 }
