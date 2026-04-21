@@ -8,6 +8,7 @@ build/
 .next/
 .astro/
 .turbo/
+.tsbuildinfo
 .vercel/
 .cloudflare/
 .wrangler/
@@ -42,6 +43,12 @@ playwright/.cache/
 Thumbs.db
 *.swp
 .idea/
+
+# Claude Code — personal per-user settings
+.claude/settings.local.json
+
+# Scratch / probes
+**/scratch/
 
 # Payload generated — keep src/payload-types.ts tracked (regenerated, but reviewed)
 # .next cache handled above

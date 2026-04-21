@@ -13,16 +13,17 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
-      "@moxie/contract": ["packages/@moxie/contract/src/index.ts"],
-      "@moxie/contract/*": ["packages/@moxie/contract/src/*"],
-      "@moxie/engine": ["packages/@moxie/engine/src/index.ts"],
-      "@moxie/engine/*": ["packages/@moxie/engine/src/*"],
-      "@moxie/ui": ["packages/@moxie/ui/src/index.ts"],
-      "@moxie/ui/*": ["packages/@moxie/ui/src/*"],
-      "@moxie/tokens": ["packages/@moxie/tokens/src/index.ts"],
-      "@moxie/tokens/*": ["packages/@moxie/tokens/src/*"]
+      "@moxie/core": ["./packages/@moxie/core/src/index.ts"],
+      "@moxie/core/*": ["./packages/@moxie/core/src/*"],
+      "@moxie/contract": ["./packages/@moxie/contract/src/index.ts"],
+      "@moxie/contract/*": ["./packages/@moxie/contract/src/*"],
+      "@moxie/engine": ["./packages/@moxie/engine/src/index.ts"],
+      "@moxie/engine/*": ["./packages/@moxie/engine/src/*"],
+      "@moxie/ui": ["./packages/@moxie/ui/src/index.ts"],
+      "@moxie/ui/*": ["./packages/@moxie/ui/src/*"],
+      "@moxie/tokens": ["./packages/@moxie/tokens/src/index.ts"],
+      "@moxie/tokens/*": ["./packages/@moxie/tokens/src/*"]
     }
   }
 }
